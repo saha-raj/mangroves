@@ -220,9 +220,10 @@ async function testSetup() {
     console.log('Config loaded:', window.visualizationConfig);
     console.log('Current state:', window.visualizationState);
     
-    // Test image loading
+    // Test image loading with correct format
     try {
-        const testImage = await loadImage('assets/location1/frames/1984.png');
+        const format = window.visualizationConfig.imageFormat || 'webp';
+        const testImage = await loadImage(`assets/location1/frames/1984.${format}`);
         console.log('Image loading works:', testImage !== null);
     } catch (error) {
         console.error('Image loading failed:', error);

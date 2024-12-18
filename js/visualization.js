@@ -121,13 +121,6 @@ async function updateLocation(location) {
 
 // Helper function to load single image
 async function loadImage(path) {
-    const config = window.visualizationConfig;
-    // Use the format from config
-    const format = config.imageFormat || 'webp';
-    
-    // Replace any existing image extension with the configured format
-    path = path.replace(/\.(png|jpg|jpeg|webp)$/, `.${format}`);
-    
     return new Promise((resolve, reject) => {
         const img = new Image();
         img.onload = () => resolve(img);

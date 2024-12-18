@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coastal Change Visualization</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="content">
+        <div class="text-block">
+            <h1>How Mangroves Slow Coastal Erosion</h1>
+            <div class="author">
+                <p>By Raj Saha, PhD</p>
+            </div>
+            <p>Bangladesh is losing ground. Every year, river erosion swallows up 10,000 hectares of land, 
+                displacing thousands. The country's vast river delta, home to 170 million people, sits barely 
+                above sea level, making it one of the world's most climate-vulnerable regions.
+            </p>
+            <p>
+                To illustrate the impact of coastal erosion in Bangladesh's river delta, we present time-lapse 
+                imagery comparing two distinct locations over the past two decades: one safeguarded by mangrove 
+                forests and another devoid of such natural defenses.
+            </p>
+            
+        </div>
+
+    
+
+        <div class="sequence-block">
+            <div class="sequence-container">
+                <div id="visualization-container"></div>
+            </div>
+            <div class="sequence-progress"></div>
+        </div>
+
+        <div class="text-block">
+            <h2>Mangrove-Protected Regions</h2>
+            <p>In areas like the Sundarbans, the world's largest contiguous mangrove forest, 
+                mangroves play a crucial role in stabilizing coastlines. Their dense root systems 
+                anchor the soil and dissipate wave energy, significantly reducing erosion. 
+                Time-lapse imagery of these regions reveals minimal shoreline retreat, 
+                underscoring the protective benefits of mangrove ecosystems.
+            </p>
+        </div>
+        <div class="text-block">
+            <h2>Unprotected Regions</h2>
+            <p>Conversely, regions lacking mangrove coverage, such as parts of the Noakhali and Chittagong districts, 
+                have experienced severe erosion. Human interventions, including deforestation and conversion to 
+                shrimp farms, have exacerbated land loss. Time-lapse imagery of these areas shows dramatic coastline retreat, 
+                highlighting the vulnerability of unprotected shores. 
+                
+                These visual comparisons emphasize the critical importance of mangrove conservation and restoration 
+                in mitigating coastal erosion and protecting vulnerable communities in Bangladesh.
+            </p>
+        </div>
+
+        <div class="text-block">
+            <h2>Image Sources & Visualization</h2>
+            <p>This project uses time-lapse imagery from Google Earth Engine's Landsat 8 and Sentinel-2 satellite data. 
+                The years span from 1984 to 2020. 
+            </p>
+            <p>This visualization was created using D3.js for interactive elements and animation control.</p> 
+
+        </div>
+
+
+    </div>
+
+    <footer class="footer">
+        <div class="container">  
+            <p>© 2024 Raj Saha</p>
+            <p><a href="https://github.com/saha-raj/" target="_blank">Github</a></p>
+        </div>
+    </footer>
+
+    <script src="js/visualization.js"></script>
+    <script src="js/scrollHandler.js"></script>
+    <script src="js/transitionHandler.js"></script>
+    <script src="js/sequence-handler.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

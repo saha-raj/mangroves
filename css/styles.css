@@ -1,0 +1,418 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* overflow: hidden; */
+    background-color: #efefef;
+    font-family: "Noto Serif", serif;
+    line-height: 1.5;
+    overflow-x: hidden;
+    min-height: 120vh;
+}
+
+h1 {
+    font-family: "Noto Serif", serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    margin-top: 3rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-family: "Noto Serif", serif;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+p {
+    font-family: "Noto Serif", serif;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    position: relative;
+    overflow: visible;
+}
+
+.author {
+    margin: 1rem 0 2rem 0;
+    font-family: 'Noto Sans', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+}
+
+.author p {
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+    color: #495057;
+}
+
+a {
+    color: #2a9d8f;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom-color 0.2s ease-in-out;
+}
+
+a:hover {
+    border-bottom-color: #2a9d8f;
+}
+
+a:visited {
+    color: #2a9d8f;
+}
+
+a:active {
+    color: #2a9d8f;
+}
+
+.article-image {
+    margin: 2rem 0;
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.article-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.article-image .caption {
+    font-family: 'Noto Sans', sans-serif;
+    margin-top: 0;
+    text-align: left;
+    color: #666;
+    font-size: 0.9rem;
+    background-color: #efefef;
+    padding: 0.75rem;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+/* Media queries */
+@media (min-width: 1200px) {
+    .article-image {
+        margin: 3rem auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-image {
+        margin: 1.5rem 0;
+    }
+    
+    .article-image .caption {
+        font-size: 0.8rem;
+    }
+}
+
+#visualization-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+    transition: padding-bottom 0.6s ease-out;
+}
+
+.sequence-block.is-fullscreen #visualization-container {
+    height: 100vh;
+    padding-bottom: 0;
+}
+
+/* D3 specific styles */
+.main-svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.image-layer {
+    width: 100%;
+    height: 100%;
+}
+
+.coastline-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.coastline-path {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.8);
+    stroke-width: 1.5;
+    pointer-events: none;
+    vector-effect: non-scaling-stroke;
+}
+
+/* Overlay elements */
+.location-label {
+    fill: white;
+    font-size: 24px;
+    font-family: Arial, sans-serif;
+    transition: font-size 0.3s ease;
+}
+
+.year-label {
+    fill: white;
+    font-size: 36px;
+    font-family: Arial, sans-serif;
+    transition: font-size 0.3s ease;
+}
+
+.scroll-progress {
+    fill: rgba(255, 255, 255, 0.2);
+}
+
+.scroll-indicator {
+    fill: white;
+}
+
+/* Add these to your existing styles */
+.coastline-toggle .toggle-background {
+    fill: rgba(255, 255, 255, 0.1);
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 1;
+}
+
+.coastline-toggle .toggle-background.toggle-active {
+    fill: rgba(255, 255, 255, 0.2);
+    stroke: rgba(255, 255, 255, 0.5);
+}
+
+.coastline-toggle .toggle-text {
+    fill: white;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    user-select: none;
+}
+
+.coastline-toggle:hover .toggle-background {
+    fill: rgba(255, 255, 255, 0.15);
+}
+
+.sequence-block {
+    width: 100%;
+    position: relative;
+    margin: 2rem 0;
+    z-index: 1;
+}
+
+.sequence-container {
+    position: relative;
+    width: 100%;
+}
+
+#visualization-container {
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;  /* 16:9 aspect ratio */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Fullscreen state */
+.sequence-block.is-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    background: black;
+    z-index: 1000;
+}
+
+.sequence-block.is-fullscreen #visualization-container {
+    height: 100vh;
+    padding-bottom: 0;
+}
+
+.nav-arrow {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 2.5rem;
+    cursor: pointer;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    display: none;
+    z-index: 1000;
+}
+
+.nav-up {
+    top: 20px;
+}
+
+.nav-down {
+    bottom: 20px;
+}
+
+.nav-arrow:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Show arrows on hover */
+.sequence-block.is-fullscreen:hover .nav-arrow {
+    opacity: 0.7;
+}
+
+.image-layer image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Add button styles */
+.expand-background {
+    fill: rgba(255, 255, 255, 0.1);
+    stroke: rgba(255, 255, 255, 0.3);
+}
+
+.expand-icon {
+    fill: none;
+    stroke: white;
+}
+
+.expand-button:hover .expand-background {
+    fill: rgba(255, 255, 255, 0.2);
+}
+
+/* Add these styles for the expand button */
+.expand-button {
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.expand-button:hover {
+    opacity: 1;
+}
+
+.expand-background {
+    fill: rgba(0, 0, 0, 0.5);
+    stroke: rgba(255, 255, 255, 0.3);
+}
+
+.expand-icon {
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+}
+
+/* Update the button icon based on state */
+.sequence-block.is-fullscreen .expand-icon {
+    d: path('M5,5 L15,5 L15,15 L5,15 Z M25,5 L35,5 L35,15 L25,15 Z M5,25 L15,25 L15,35 L5,35 Z M25,25 L35,25 L35,35 L25,35 Z');
+}
+
+.expand-collapse-toggle {
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.expand-collapse-toggle:hover {
+    opacity: 1;
+}
+
+.expand-collapse-toggle .toggle-background {
+    fill: rgba(0, 0, 0, 0.4);
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 1;
+}
+
+.expand-collapse-toggle:hover .toggle-background {
+    fill: rgba(0, 0, 0, 0.6);
+}
+
+/* Much larger text in fullscreen mode */
+.sequence-block.is-fullscreen .location-label {
+    font-size: 48px;  /* Doubled from 24px */
+}
+
+.sequence-block.is-fullscreen .year-label {
+    font-size: 96px;  /* Much larger than base 36px */
+    font-weight: bold;
+}
+
+.hint-text {
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    opacity: 0.8;
+    transition: font-size 0.3s ease;
+}
+
+/* Larger hint text in fullscreen mode */
+.sequence-block.is-fullscreen .hint-text {
+    font-size: 18px;
+}
+
+.expand-hint {
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    opacity: 0.8;
+}
+
+/* Hide in fullscreen mode */
+.sequence-block.is-fullscreen .expand-hint {
+    display: none;
+}
+
+.footer {
+    min-height: 20vh;
+    font-family: 'Noto Sans', sans-serif;
+    background-color: #f5f5f5;
+    margin-top: 4rem;
+    padding: 2rem 0;
+}
+
+.footer .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    color: #cfdae1;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.footer p {
+    margin-bottom: 1rem;
+    color: #cfdae1;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1rem;
+}
+
+.footer a {
+    color: #cfdae1;
+    font-family: 'Noto Sans', sans-serif;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom-color 0.2s ease-in-out;
+}
+
+.footer a:hover {
+    border-bottom-color: #495057;
+}

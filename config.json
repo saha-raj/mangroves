@@ -20,5 +20,6 @@
     "years": {
         "start": 1984,
         "end": 2020
-    }
+    },
+    "imageFormat": "webp"
 }

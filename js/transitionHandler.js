@@ -12,10 +12,10 @@ const TRANSITION_FRAME_DURATION = 300; // milliseconds per frame
 async function loadTransitionFrames(fromLocation, toLocation) {
     transitionState.frames = [];
     
-    // Load 40 frames with .png extension
+    // Load 40 frames with .webp extension
     for (let i = 1; i <= 40; i++) {
         const frameNumber = i.toString().padStart(4, '0');  // converts 1 to "0001"
-        const framePath = `assets/${fromLocation}/transitions/frame_${frameNumber}.png`;  // Changed .jpg to .png
+        const framePath = `assets/${fromLocation}/transitions/frame_${frameNumber}.webp`;  // Changed from .png to .webp
         
         try {
             const frame = await loadImage(framePath);

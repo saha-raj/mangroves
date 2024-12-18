@@ -7,21 +7,21 @@ const imageCache = {
 // Load and cache images for a location
 async function preloadImages(location) {
     const config = window.visualizationConfig;
+    const format = config.imageFormat || 'webp';
     
-    // Preload images in chunks to avoid overwhelming the browser
+    // Preload images in chunks
     const chunkSize = 5;
     for (let year = config.years.start; year <= config.years.end; year += chunkSize) {
         const promises = [];
         
-        // Load a chunk of images
         for (let i = 0; i < chunkSize && (year + i) <= config.years.end; i++) {
             const currentYear = year + i;
             if (!imageCache[location].has(currentYear)) {
-                promises.push(loadImage(`assets/${location}/frames/${currentYear}.png`));
+                promises.push(loadImage(`assets/${location}/frames/${currentYear}.${format}`));
             }
         }
         
-        // Wait for chunk to load before proceeding
+        // Wait for chunk to load
         const images = await Promise.all(promises);
         images.forEach((img, index) => {
             imageCache[location].set(year + index, img);
@@ -120,12 +120,19 @@ async function updateLocation(location) {
 }
 
 // Helper function to load single image
-function loadImage(src) {
+async function loadImage(path) {
+    const config = window.visualizationConfig;
+    // Use the format from config
+    const format = config.imageFormat || 'webp';
+    
+    // Replace any existing image extension with the configured format
+    path = path.replace(/\.(png|jpg|jpeg|webp)$/, `.${format}`);
+    
     return new Promise((resolve, reject) => {
         const img = new Image();
         img.onload = () => resolve(img);
         img.onerror = reject;
-        img.src = src;
+        img.src = path;
     });
 }
 

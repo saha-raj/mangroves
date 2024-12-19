@@ -61,6 +61,8 @@ async function loadCoastline(location) {
 
 // Update visualization with new image
 function updateVisualization(year) {
+    const startTime = performance.now();
+    
     const state = window.visualizationState;
     const layers = window.visualizationLayers;
     
@@ -74,20 +76,28 @@ function updateVisualization(year) {
     // Update image
     const currentImage = imageCache[state.currentLocation].get(year);
     if (currentImage) {
-        // Remove existing image if any
-        layers.images.selectAll('image').remove();
-        
-        // Add new image
-        layers.images.append('image')
-            .attr('width', '100%')
-            .attr('height', '100%')
-            .attr('preserveAspectRatio', 'xMidYMid slice')
-            .attr('href', currentImage.src);
+        // Ensure image is fully decoded before showing
+        currentImage.decode()
+            .then(() => {
+                // Remove existing image if any
+                layers.images.selectAll('image').remove();
+                
+                // Add new image
+                layers.images.append('image')
+                    .attr('width', '100%')
+                    .attr('height', '100%')
+                    .attr('preserveAspectRatio', 'xMidYMid slice')
+                    .attr('href', currentImage.src);
+            })
+            .catch(err => console.error('Error decoding image:', err));
     }
 
     // Update year display
     layers.overlay.select('.year-label')
         .text(year);
+        
+    const endTime = performance.now();
+    console.log(`Frame update took ${(endTime - startTime).toFixed(2)}ms`);
 }
 
 // Initialize location

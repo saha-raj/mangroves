@@ -425,3 +425,22 @@ a:active {
 .footer a:hover {
     border-bottom-color: #495057;
 }
+
+.play-pause-toggle {
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.play-pause-toggle:hover {
+    opacity: 1;
+}
+
+.play-pause-toggle .toggle-background {
+    fill: rgba(0, 0, 0, 0.4);
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 1;
+}
+
+.play-pause-toggle:hover .toggle-background {
+    fill: rgba(0, 0, 0, 0.6);
+}

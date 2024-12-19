@@ -79,6 +79,13 @@ function performTransition(fromLocation, toLocation) {
                     .text(state.currentYear);
                 updateScrollIndicator(state.currentYear);
                 
+                if (isPlaying) {
+                    clearInterval(playInterval);
+                    isPlaying = false;
+                    d3.select('.play-pause-toggle').select('.toggle-icon')
+                        .attr('href', 'assets/general/play.svg');
+                }
+                
                 resolve();
                 return;
             }

@@ -311,3 +311,58 @@ const expandHint = layers.overlay.append('text')
     .attr('y', 115)  // Position below the existing hint
     .style('fill', 'rgba(255, 255, 255, 0.8)')
     .text('Expand to scroll through time lapse imagery');
+
+// Add play/pause button below coastline toggle
+const playPauseButton = layers.overlay.append('g')
+    .attr('class', 'play-pause-toggle')
+    .attr('transform', 'translate(20, 180)')  // 40px below coastline toggle (which is at 140)
+    .style('cursor', 'pointer')
+    .style('pointer-events', 'all');
+
+// Button background
+playPauseButton.append('rect')
+    .attr('width', 40)
+    .attr('height', 40)
+    .attr('rx', 5)
+    .attr('class', 'toggle-background');
+
+// Add SVG icon container
+playPauseButton.append('image')
+    .attr('class', 'toggle-icon')
+    .attr('width', 24)
+    .attr('height', 24)
+    .attr('x', 8)
+    .attr('y', 8)
+    .attr('href', 'assets/general/play.svg');
+
+// Add click handler
+let isPlaying = false;
+let playInterval;
+
+playPauseButton.on('click', () => {
+    isPlaying = !isPlaying;
+    
+    if (isPlaying) {
+        playPauseButton.select('.toggle-icon')
+            .attr('href', 'assets/general/pause.svg');
+            
+        // Start auto-advancing through years
+        playInterval = setInterval(() => {
+            const state = window.visualizationState;
+            const config = window.visualizationConfig;
+            
+            let newYear = state.currentYear + 1;
+            if (newYear > config.endYear) {
+                newYear = config.startYear;
+            }
+            
+            state.currentYear = newYear;
+            updateVisualization(newYear);
+            updateScrollIndicator(newYear);
+        }, 200);  // Advance every 200ms (adjust this value to control speed)
+    } else {
+        playPauseButton.select('.toggle-icon')
+            .attr('href', 'assets/general/play.svg');
+        clearInterval(playInterval);
+    }
+});

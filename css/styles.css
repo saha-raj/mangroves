@@ -179,9 +179,18 @@ a:active {
 
 .year-label {
     fill: white;
-    font-size: 36px;
     font-family: Arial, sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    opacity: 1;
     transition: font-size 0.3s ease;
+    visibility: visible !important;
+    display: block !important;
+}
+
+.sequence-block.is-fullscreen .year-label {
+    font-size: 96px;
+    font-weight: bold;
 }
 
 .scroll-progress {
@@ -355,7 +364,7 @@ a:active {
 }
 
 .sequence-block.is-fullscreen .year-label {
-    font-size: 96px;  /* Much larger than base 36px */
+    font-size: 96px;
     font-weight: bold;
 }
 

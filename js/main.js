@@ -50,11 +50,35 @@ function updateHintText(location) {
     hintText.text(hint);
 }
 
-// Add year label to bottom left
-layers.overlay.append('text')
+// Get the visualization container dimensions
+const vizContainer = d3.select('#visualization-container');
+const containerWidth = vizContainer.node().getBoundingClientRect().width;
+const containerHeight = containerWidth * (9/16);  // 16:9 aspect ratio
+
+// Add year label
+const yearLabel = layers.overlay.append('text')
     .attr('class', 'year-label')
     .attr('x', 20)
-    .attr('y', defaultConfig.height - 40);
+    .attr('y', containerHeight - 40)  // Fixed distance from bottom
+    .attr('text-anchor', 'start')
+    .attr('alignment-baseline', 'middle')
+    .text('1984');
+
+// Debug log
+console.log('Year label created:', {
+    element: yearLabel.node(),
+    text: yearLabel.text(),
+    x: yearLabel.attr('x'),
+    y: yearLabel.attr('y'),
+    containerWidth: containerWidth
+});
+
+// Add resize handler for the year label
+window.addEventListener('resize', () => {
+    const newWidth = vizContainer.node().getBoundingClientRect().width;
+    const newHeight = newWidth * (9/16);
+    yearLabel.attr('y', newHeight - 40);  // Maintain fixed distance from bottom
+});
 
 // Add coastline toggle button below both texts
 const toggleButton = layers.overlay.append('g')
@@ -82,10 +106,6 @@ console.log('Initial setup:');
 console.log('SVG width:', defaultConfig.width);
 console.log('Button position:', defaultConfig.width - 60);
 console.log('SVG viewBox:', svg.attr('viewBox'));
-
-// Get the visualization container dimensions
-const vizContainer = d3.select('#visualization-container');
-const containerWidth = vizContainer.node().getBoundingClientRect().width;
 
 // Add expand/collapse button AFTER all other overlay elements
 const expandCollapseButton = layers.overlay.append('g')

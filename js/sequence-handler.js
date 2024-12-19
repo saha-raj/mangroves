@@ -17,6 +17,10 @@ function expandSequence() {
     sequenceState.sequenceBlock.classList.add('is-fullscreen');
     document.body.style.overflow = 'hidden';
     window.setScrollHandlerActive(true);
+    
+    // Update year label position for expanded state
+    const yearLabel = d3.select('.year-label');
+    yearLabel.attr('y', window.innerHeight - 80);  // 80px from bottom in expanded state
 }
 
 function collapseSequence() {
@@ -24,18 +28,12 @@ function collapseSequence() {
     sequenceState.sequenceBlock.classList.remove('is-fullscreen');
     document.body.style.overflow = '';
     window.setScrollHandlerActive(false);
-
-    // Explicitly handle expand button visibility
-    const expandButton = d3.select('.expand-collapse-toggle');
-    if (expandButton.node()) {
-        expandButton
-            .style('opacity', '0.8')
-            .style('display', null)  // Remove any display: none
-            .style('visibility', 'visible');  // Ensure visibility
-            
-        expandButton.select('.toggle-icon')
-            .attr('href', 'assets/general/expand.svg');
-    }
+    
+    // Reset year label position for collapsed state
+    const yearLabel = d3.select('.year-label');
+    const containerWidth = d3.select('#visualization-container').node().getBoundingClientRect().width;
+    const containerHeight = containerWidth * (9/16);
+    yearLabel.attr('y', containerHeight - 40);  // 40px from bottom in collapsed state
 }
 
 // Remove all scroll-based expansion triggers and arrow navigation

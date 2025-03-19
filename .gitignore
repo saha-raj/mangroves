@@ -4,3 +4,6 @@ node_modules/
 .DS_Store
 node_modules/
 *.log
+js/main.js.backup
+js/transitionHandler.js.backup
+js/visualization.js.backup
